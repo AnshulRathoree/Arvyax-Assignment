@@ -135,7 +135,7 @@ export default function SessionCard({
                 variant="outline"
                 size="sm"
                 onClick={() => onEdit?.(session._id)}
-                className="flex-1 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-300 flex items-center justify-center gap-2"
+                className="flex-1 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-300 flex items-center justify-center gap-2 min-h-[44px] py-3"
               >
                 <FaEdit className="w-3 h-3" />
                 <span>Edit</span>
@@ -144,7 +144,7 @@ export default function SessionCard({
                 variant="danger"
                 size="sm"
                 onClick={() => onDelete?.(session._id)}
-                className="flex-1 flex items-center justify-center gap-2"
+                className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3"
               >
                 <FaTrash className="w-3 h-3" />
                 <span>Delete</span>

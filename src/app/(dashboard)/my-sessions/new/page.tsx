@@ -52,7 +52,7 @@ export default function NewSessionPage() {
             <Button
               variant="outline"
               onClick={() => router.push('/my-sessions')}
-              className="w-full sm:w-auto px-4 py-2 text-sm"
+              className="w-full sm:w-auto px-4 py-3 text-sm min-h-[44px] flex items-center justify-center gap-2"
             >
               <span className="hidden sm:inline">← Back to My Sessions</span>
               <span className="sm:hidden">← Back</span>

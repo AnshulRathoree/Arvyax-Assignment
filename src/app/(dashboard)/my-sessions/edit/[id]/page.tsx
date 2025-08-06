@@ -70,15 +70,20 @@ export default function EditSessionPage() {
   return (
     <Layout>
       <div className="space-y-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Edit Session</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Edit Session</h1>
             <p className="mt-2 text-gray-600">
               Edit your wellness session with auto-save functionality
             </p>
           </div>
-          <Button variant="outline" onClick={() => router.push('/my-sessions')}>
-            Back to My Sessions
+          <Button
+            variant="outline"
+            onClick={() => router.push('/my-sessions')}
+            className="w-full sm:w-auto px-4 py-3 text-sm min-h-[44px] flex items-center justify-center gap-2"
+          >
+            <span className="hidden sm:inline">← Back to My Sessions</span>
+            <span className="sm:hidden">← Back</span>
           </Button>
         </div>
 
