@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import Button from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
@@ -9,10 +10,38 @@ import { useToast } from '@/components/ui/Toast';
 export default function Header() {
   const { user, logout } = useAuth();
   const { showToast } = useToast();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     logout();
     showToast('Logged out successfully', 'success');
+  };
+
+  const isActivePage = (path: string) => {
+    if (path === '/') {
+      return pathname === '/';
+    }
+    if (path === '/dashboard') {
+      return pathname === '/dashboard';
+    }
+    if (path === '/my-sessions') {
+      return pathname.startsWith('/my-sessions');
+    }
+    return pathname === path;
+  };
+
+  const getNavLinkClasses = (path: string, isMobile = false) => {
+    const baseClasses = isMobile
+      ? 'px-3 py-2 text-xs font-medium rounded-md transition-all duration-200'
+      : 'px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200';
+
+    const isActive = isActivePage(path);
+
+    if (isActive) {
+      return `${baseClasses} bg-indigo-100 text-indigo-700 border border-indigo-200`;
+    }
+
+    return `${baseClasses} text-slate-700 hover:text-indigo-600 hover:bg-indigo-50`;
   };
 
   return (
@@ -20,22 +49,29 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3 group">
-            <strong> Home </strong>
-             </Link>
+            <Link
+              href="/"
+              className={`flex items-center space-x-3 group px-3 py-2 rounded-lg transition-all duration-200 ${
+                isActivePage('/')
+                  ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                  : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50'
+              }`}
+            >
+              <strong>Home</strong>
+            </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-1">
             <Link
               href="/dashboard"
-              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200"
+              className={getNavLinkClasses('/dashboard')}
             >
               Dashboard
             </Link>
             {user && (
               <Link
                 href="/my-sessions"
-                className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200"
+                className={getNavLinkClasses('/my-sessions')}
               >
                 My Sessions
               </Link>
@@ -46,14 +82,14 @@ export default function Header() {
           <nav className="md:hidden flex items-center space-x-1">
             <Link
               href="/dashboard"
-              className="px-3 py-2 text-xs font-medium text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-all duration-200"
+              className={getNavLinkClasses('/dashboard', true)}
             >
               Dashboard
             </Link>
             {user && (
               <Link
                 href="/my-sessions"
-                className="px-3 py-2 text-xs font-medium text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-all duration-200"
+                className={getNavLinkClasses('/my-sessions', true)}
               >
                 Sessions
               </Link>

@@ -23,7 +23,7 @@ export async function GET() {
       .populate({
         path: 'user_id',
         select: 'email',
-        model: 'User'
+        model: User
       })
       .sort({ created_at: -1 })
       .lean();
